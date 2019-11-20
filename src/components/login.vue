@@ -7,11 +7,11 @@
       <el-form  label-width="0px" class="login_form" :model="form" :rules="rules" ref="loginFormRef">
         <!--账号  -->
         <el-form-item  prop="username">
-          <el-input prefix-icon="iconfont icon-yonghu" v-model="form.username"></el-input>
+          <el-input prefix-icon="iconfont icon-users" v-model="form.username"></el-input>
         </el-form-item>
         <!-- 密码-->
         <el-form-item  prop="password">
-          <el-input prefix-icon="iconfont icon-mima" v-model="form.password" type="password"></el-input>
+          <el-input prefix-icon="iconfont icon-3702mima" v-model="form.password" type="password"></el-input>
         </el-form-item>
         <!-- 登录按钮-->
         <el-form-item style="text-align:center;">
@@ -57,6 +57,7 @@ export default {
               type:'success'
             })
             window.sessionStorage.setItem("token",res.data.token);
+            window.sessionStorage.setItem("username",res.data.username);
             this.$router.push({path:'/home'})
           }
           else{
