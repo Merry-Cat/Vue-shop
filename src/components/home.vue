@@ -20,7 +20,8 @@
                 background-color="#333744"
                 text-color="#fff"
                 active-text-color="#409bff"
-                unique-opened :collapse="isFold" router>
+                unique-opened :collapse="isFold" router
+                >
                 <el-submenu :index="'/'+item.path" v-for="item in menulist" :key="item.id">
                   <!-- 一级导航-->
                   <template slot="title">
@@ -28,7 +29,7 @@
                     <span>{{item.authName}}</span>
                   </template>
                   <!-- 二级导航-->
-                    <el-menu-item :index="'/'+item.path" v-for="item in item.children" :key="item.id" @click="getPath('/'+item.path)">
+                    <el-menu-item :index="'/'+item.path" @setpath="getPath($event)" v-for="item in item.children" :key="item.id" @click="getPath('/'+item.path)">
                       <template slot="title">
                         <i class="el-icon-menu" style="padding-right: 5px;"></i>
                         <span>{{item.authName}}</span>
@@ -77,6 +78,7 @@
         //console.log(key, keyPath);
       },
       getPath(path){
+        //console.log(path)
         window.sessionStorage.setItem("activepath",path)
         this.activepath = path;
       },
@@ -88,7 +90,7 @@
         }
         else{
           this.menulist = res.data
-          console.log(this.menulist)
+          //console.log(this.menulist)
         }
       },
       //菜单栏的隐藏与显示
@@ -154,14 +156,6 @@
     .el-main {
       background-color: #eaedf1;
       color: #333;
-      text-align: center;
       //line-height: 160px;
-    }
-
-    body > .el-container {
-      margin-bottom: 40px;
-    }
-    .el-menu-item-group{
-      text-align: left;
     }
 </style>

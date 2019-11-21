@@ -31,6 +31,10 @@ router.beforeEach((to,from,next)=>{
   if(!tokenStr){
     return next("/login")
   }
+  if(tokenStr&&to.path == "/welcome"){
+    window.sessionStorage.setItem("activepath",to.path)
+    return next()
+  }
   next()
 })
 export default router

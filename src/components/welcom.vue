@@ -1,6 +1,6 @@
 <template>
   <div class="welcom">
-    <span>{{showcare}},{{username}}</span><span>,欢迎您的到来。</span>
+    <span  @click='$emit("setpath",2)'>{{showcare}},{{username}}</span><span>,欢迎您的到来。</span>
   </div>
 </template>
 <script>
@@ -9,7 +9,8 @@
       return{
         username:window.sessionStorage.getItem("username"),
         care:['早上好','下午好','晚上好','夜深了，注意休息'],
-        showcare:''
+        showcare:'',
+        activepath:window.sessionStorage.getItem("activepath")
       }
     },
     created(){
@@ -19,10 +20,10 @@
       careSentens(){
         let time = new Date().getHours()
         switch (true){
-          case time>6&&time<=12:
+          case time>6&&time<12:
           this.showcare = this.care[0]
             break;
-          case time>12&&time<=18:
+          case time>=12&&time<=18:
           this.showcare = this.care[1]
             break
           case time>18&&time<24:
