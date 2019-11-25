@@ -2,8 +2,8 @@
   <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
+      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card class="box-card">
       <!-- 搜索区域-->
@@ -35,11 +35,35 @@
               <el-button type="primary" icon="el-icon-edit" circle size="mini" @click="update(scope.row.id)"></el-button>
               <el-button type="danger" icon="el-icon-delete" circle size="mini" @click="deldialog(scope.row.id)"></el-button>
               <el-tooltip effect="dark" content="分配角色" placement="top">
-                <el-button type="warning" icon="el-icon-s-tools" circle size="mini"></el-button>
+                <el-button type="warning" icon="el-icon-s-tools" circle size="mini" @click="setRole(scope.row)"></el-button>
               </el-tooltip>
             </template>
            </el-table-column>
         </el-table>
+        <!-- 分配角色弹窗-->
+        <el-dialog title="分配角色" :visible="setRoleDialogVisible" width="500px" @close="closeAlert">
+          <el-form ref="setRoleRef">
+            <div>
+              <p>当前用户：{{userInfo.username}}</p>
+              <p>当前角色：{{userInfo.role_name}}</p>
+              <p><template>
+                <el-select v-model="selectedRoleId" clearable placeholder="请选择">
+                  <el-option
+                    v-for="item in roleList"
+                    :key="item.value"
+                    :label="item.roleName"
+                    :value="item.id">
+                  </el-option>
+                </el-select>
+              </template>
+              </p>
+            </div>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="setRoleDialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="setRolesubmit">确 定</el-button>
+          </div>
+        </el-dialog>
         <!-- 修改弹窗用户-->
        <el-dialog title="修改用户" :visible.sync="updatedialogFormVisible" width="500px" @close="closeRef">
           <el-form :model="updateUser" :rules="checkTelAndEmailrules" ref="closeRef" >
@@ -146,6 +170,7 @@
         dialogFormVisible: false,
         updatedialogFormVisible:false,
         deldialogVisible:false,
+        setRoleDialogVisible:false,
         formLabelWidth:"80px",
         form:{
           username:'',
@@ -163,7 +188,10 @@
             { validator:checkEmail,trigger:'blur' }
           ]
         },
-        updateUser:{},
+        updateUser:{},//更新用户状态需要的数据
+        userInfo:{},//要更新权限的用户数据
+        roleList:[],//分配角色数据
+        selectedRoleId:'',
         rules: {
           username: [
             { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -279,6 +307,17 @@
         this.deldialogVisible = false
         this.getUserList()
       },
+      async setRole(userInfo){
+        this.userInfo = userInfo
+        const {data:res} = await this.$http.get('roles')
+        if(res.meta.status == 200){
+          this.roleList = res.data;
+        }
+        else{
+          this.$message.error(res.meta.msg)
+        }
+        this.setRoleDialogVisible = true
+      },
       //关闭创建用户的回调函数
       close(){
         this.$refs.addRef.resetFields()
@@ -287,7 +326,27 @@
       closeRef(){
         this.$refs.closeRef.resetFields()
         this.getUserList();
-      }
+      },
+      closeAlert(){
+        this.$refs.setRoleRef.resetFields()
+        this.getUserList();
+      },
+      //提交设置角色
+      async setRolesubmit(){
+        if (!this.selectedRoleId){
+          return this.$message.error("未选择任何参数")
+        }
+        else{
+         const {data:res} = await this.$http.put(`users/${this.userInfo.id}/role`,{rid:this.selectedRoleId})
+         if(res.meta.status == 200){
+              this.$message.success(res.meta.msg)
+              this.setRoleDialogVisible = false
+              }
+          else
+              return this.$message.error(res.meta.msg)
+         }
+        }
+
     },
     created(){
       this.getUserList()
