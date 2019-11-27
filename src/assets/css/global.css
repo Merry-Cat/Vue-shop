@@ -15,3 +15,9 @@ html,body,#app{
 .el-table{
 	margin-top: 15px;
 }
+.el-cascader-menu__wrap{
+    height: 204px!important;
+}
+.el-cascader{
+	width: 100%!important;
+}
