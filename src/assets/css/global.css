@@ -18,6 +18,3 @@ html,body,#app{
 .el-cascader-menu__wrap{
     height: 204px!important;
 }
-.el-cascader{
-	width: 100%!important;
-}

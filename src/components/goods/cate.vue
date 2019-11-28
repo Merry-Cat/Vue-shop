@@ -48,13 +48,14 @@
       :visible.sync="addcatdialogVisible"
       width="500px"
       @close="closeAddCateDialog"
-    >
+      >
       <el-form label-width="80px" :model="addcateForm" :rules="addcateFormRules" ref="addcateFormRef">
         <el-form-item label="分类名称" prop="cat_name">
           <el-input v-model="addcateForm.cat_name"></el-input>
         </el-form-item>
         <el-form-item label="父级分类">
             <el-cascader
+              class="fullScreen"
               v-model="selectedKeys"
               :options="parentcatelist"
               :props="catelistprops"
@@ -215,5 +216,8 @@
 <style lang="less" scoped>
   .treeTable{
     margin-top: 15px;
+  }
+  .fullScreen{
+    width: 100%;
   }
 </style>
