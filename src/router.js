@@ -11,11 +11,14 @@ import Params from './components/goods/params.vue'
 import List from './components/goods/list.vue'
 import Add from './components/goods/Add.vue'
 import Order from './components/order/order.vue'
+import Reports from './components/reports/reports.vue'
 Vue.use(VueRouter)
+//解决跳转相同路径报错的代码
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
+//路由配置
 const router =  new VueRouter({
   routes: [
     { path: '/', redirect: '/login' },
@@ -29,7 +32,8 @@ const router =  new VueRouter({
       {path:'/params',component:Params},
       {path:'/goods',component:List},
       {path:'/goods/add',component:Add},
-      {path:'/orders',component:Order}
+      {path:'/orders',component:Order},
+      {path:'/reports',component:Reports}
     ] }
   ]
 })

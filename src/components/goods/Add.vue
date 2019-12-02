@@ -274,4 +274,8 @@
   .btn-add{
     margin-top: 15px;
   }
+  .el-steps--horizontal{
+    margin-top: 15px;
+    margin-bottom: 5px;
+  }
 </style>
