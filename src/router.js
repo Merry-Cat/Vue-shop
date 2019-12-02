@@ -1,17 +1,30 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from './components/login.vue'
-import Home from './components/home.vue'
-import Welcome from './components/welcom.vue'
-import Users from './components/user/users.vue'
-import Rights from './components/power/rights.vue'
-import Roles from './components/power/roles.vue'
-import Cate from './components/goods/cate.vue'
-import Params from './components/goods/params.vue'
-import List from './components/goods/list.vue'
-import Add from './components/goods/Add.vue'
-import Order from './components/order/order.vue'
-import Reports from './components/reports/reports.vue'
+//路由改造,根据需要来加载相应的路由,而不是一次性加载全部路由.
+const Login = () =>import(/* webpackChunkName:"login_home_welcome" */ './components/login.vue')
+//import Login from './components/login.vue'
+const Home = () =>import(/* webpackChunkName:"login_home_welcome" */ './components/home.vue')
+//import Home from './components/home.vue'
+const Welcome = () =>import(/* webpackChunkName:"login_home_welcome" */ './components/welcom.vue')
+//import Welcome from './components/welcom.vue'
+const Users = () =>import(/* webpackChunkName:"user_rights_roles" */ './components/user/users.vue')
+//import Users from './components/user/users.vue'
+const Rights = () =>import(/* webpackChunkName:"user_rights_roles" */ './components/power/rights.vue')
+//import Rights from './components/power/rights.vue'
+const Roles = () =>import(/* webpackChunkName:"user_rights_roles" */ './components/power/roles.vue')
+//import Roles from './components/power/roles.vue'
+const Cate = () =>import(/* webpackChunkName:"cate_params" */ './components/goods/cate.vue')
+//import Cate from './components/goods/cate.vue'
+const Params = () =>import(/* webpackChunkName:"cate_params" */ './components/goods/params.vue')
+//import Params from './components/goods/params.vue'
+const List = () =>import(/* webpackChunkName:"list_add" */ './components/goods/list.vue')
+//import List from './components/goods/list.vue'
+const Add = () =>import(/* webpackChunkName:"list_add" */ './components/goods/Add.vue')
+//import Add from './components/goods/Add.vue'
+const Order = () =>import(/* webpackChunkName:"order_reports" */ './components/order/order.vue')
+//import Order from './components/order/order.vue'
+const Reports = () =>import(/* webpackChunkName:"order_reports" */'./components/reports/reports.vue')
+//import Reports from './components/reports/reports.vue'
 Vue.use(VueRouter)
 //解决跳转相同路径报错的代码
 const originalPush = VueRouter.prototype.push
