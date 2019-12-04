@@ -3,7 +3,7 @@
       <!-- 头部区域-->
 	    <el-header>
         <div class="header-left">
-          <img class="imglogo" src="../assets/heima.png" alt="">
+          <img class="imglogo" src="../assets/lueluelue.png" alt="">
           <span>电商后台管理系统</span>
         </div>
         <el-button class="logout" type="info" @click="logout">退出</el-button>
